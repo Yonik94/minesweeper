@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <title>minesweeper game</title>
+</head>
+
+<body onload="init(16)">
+    <header>
+        <h1>Minesweeper Game</h1>
+    </header>
+    <div class="best-score">Your best score is:</div>
+    <div class="first-container">
+        <div class="stop-watch">00:00:00</div>
+        <div class="mines-counter"></div>
+        <div class="restart-button" onclick="init(gDifficulty)"></div>
+        <div class="lives">####</div>
+    </div>
+    <div class="level">
+        <span onclick="init(16)">Easy</span>
+        <span onclick="init(64)">Hard</span>
+        <span onclick="init(144)">Extreme</span>
+    </div>
+    <div class="board-container">
+        <table>
+            <tBody>
+            </tBody>
+        </table>
+        <div class="win-txt"></div>
+    </div>
+    <div class="safe-click" onclick="safeClicked()">
+        Safe click
+        <br>
+        remaining: <span class="safe-num"></span>
+    </div>
+
+    <script src="js/util.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
