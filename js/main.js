@@ -45,9 +45,9 @@ function init(difficulty) {
     renderTxts('.win-txt', '');
     renderTxts('.safe-num', gSafeClicks);
     gBoard = createBoard(difficulty);
-    var bestScoreEasy = setDiffAndScore(16);
-    var bestScoreHard = setDiffAndScore(64);
-    var bestScoreExtreme = setDiffAndScore(144);
+    var bestScoreEasy = setBestScore(16);
+    var bestScoreHard = setBestScore(64);
+    var bestScoreExtreme = setBestScore(144);
     renderTxts('.Easy', (bestScoreEasy) ? ` ${bestScoreEasy} seconds` : '-');
     renderTxts('.Hard', (bestScoreHard) ? ` ${bestScoreHard} seconds` : '-');
     renderTxts('.Extreme', (bestScoreExtreme) ? ` ${bestScoreExtreme} seconds` : '-');
@@ -165,44 +165,54 @@ function cellClicked(cell) {
         loadMinesOnBoard(gBoard, gMinesCount, cellPosition)
         updateMinesCount(gBoard);
         gIsFirstClick = false
+        //If 0 mines negs open all the negs cells in recursion 
         if (gBoard[cellPosition.i][cellPosition.j].minesAroundCount === 0) {
             expandShown(gBoard, cellPosition.i, cellPosition.j, cell)
         }
         var type = gBoard[cellPosition.i][cellPosition.j].minesAroundCount
         renderCell(cell, type)
     } else {
+        //If click on mine:
         if (gBoard[cellPosition.i][cellPosition.j].isMine) {
+            //If have more lives:
             if (gLives > 1) {
                 gLives--
                 updateHtml(gLives, LIVES, '.lives')
                 gBoard[cellPosition.i][cellPosition.j].isShown = false
                 return
             } else {
+                //No live remaining - game over
                 renderCell(cell, MINE);
                 cell.classList.add('red');
                 gameOver(gBoard);
             }
         } else {
+            //regular cell open only it:
             if (gBoard[cellPosition.i][cellPosition.j].minesAroundCount !== 0) {
                 type = gBoard[cellPosition.i][cellPosition.j].minesAroundCount
                 renderCell(cell, type);
             } else {
+                // 0 negs mines - open all negs cells in recursion
                 expandShown(gBoard, cellPosition.i, cellPosition.j, cell)
             }
         }
     }
     cell.classList.add('clicked')
+    //Check if win
     gIsWin = checkIfWin(gBoard)
     if (gIsWin) victory()
 }
 
 //Helping function:
+//Define function that return object with the position of cell (i, j), it will use us to update the model. 
 function getCellPos(cell) {
     var cellValues = cell.classList.value.split('-')
     var cellPosition = { i: +cellValues[1], j: parseInt(cellValues[3]) }
     return cellPosition
 }
-function saveHistory(cellPosition, isRightClick, safeClick) {
+/* Define function that return object with al details we need to check when player want to do 'undo'
+and the enter the click details to history array*/
+function saveHistory(cellPosition, isRightClick, isSafeClick) {
     var thisAction = {
         cellShown: gBoard[cellPosition.i][cellPosition.j].isShown,
         cellPositionI: cellPosition.i,
@@ -213,12 +223,11 @@ function saveHistory(cellPosition, isRightClick, safeClick) {
         isMine: gBoard[cellPosition.i][cellPosition.j].isMine,
         isMarked: gBoard[cellPosition.i][cellPosition.j].isMarked,
         isRight: isRightClick,
-        isSafe: safeClick
+        isSafe: isSafeClick
     }
     gHistory.push(thisAction)
 }
-
-
+//Define function that over the game when user click on mine and have no live anymore
 function gameOver(board) {
     clearInterval(gWatchIvl);
     updateHtml(0, LIVES, '.lives')
@@ -236,6 +245,7 @@ function gameOver(board) {
     emoji.innerHTML = SAD_SMILEY
     isGameOver = true
 }
+//Define function that check winning
 function checkIfWin(board) {
     if (gFlagged !== gMinesCount) return false
     for (var i = 0; i < board.length; i++)
@@ -245,6 +255,7 @@ function checkIfWin(board) {
         }
     return true
 }
+//Define function that stop and change the game when user win
 function victory() {
     var elEmoji = document.querySelector('.restart-button')
     elEmoji.innerHTML = WIN
@@ -255,6 +266,7 @@ function victory() {
     gEndTime = Date.now()
     saveBestScore()
 }
+//Define function that open negs cells in ricursion
 function expandShown(board, rowIdx, colIdx) {
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
         if (i < 0 || i > board.length - 1) continue;
@@ -270,19 +282,26 @@ function expandShown(board, rowIdx, colIdx) {
         }
     }
 }
+//Define function that active the safe click mode:
 function safeClicked() {
     if (gSafeClicks < 1) return
+    //update the safe click counter and html
     gSafeClicks--
-    var safeInHtml = document.querySelector('.safe-num')
-    safeInHtml.innerText = gSafeClicks
+    renderTxts('.safe-num', gSafeClicks)
+    //Get array with all position that bo have mine or shown and get one of them randomally
     var boardCellsPoses = getNoMinesOrShown(gBoard)
     var random = getRandomInt(0, boardCellsPoses.length)
     var position = boardCellsPoses[random]
+    //update the position on the DOM but do'n change the model
     var cell = document.querySelector(`.i-${position.i}-j-${position.j}`)
     cell.classList.add('safe')
+    //Save it to history:
     saveHistory(position, false, true)
     setTimeout(function () { cell.classList.remove('safe') }, 1000)
 }
+//Define function to save the bests scores
+//TODO - to find shortest way to write it (one function with parameters or something)
+//Didn't find the effective way yet.
 function saveBestScore() {
     var currTime = (gEndTime - gStartTime) / 1000
     var bestScore;
@@ -301,6 +320,7 @@ function saveBestScore() {
     }
     document.querySelector(`.${diff}`).innerText = `${bestScore} seconds`
 }
+// Define function that get the curr score and check if it's the best score of this level
 function checkIfBestScore(currTime, bestScore, diff) {
     if (!bestScore || +bestScore > currTime) {
         localStorage.setItem(`bestScore${diff}`, currTime)
@@ -310,12 +330,14 @@ function checkIfBestScore(currTime, bestScore, diff) {
         return bestScore;
     }
 }
+// Define function to start the stop watch will use it in the first click.
 function startStopWatch() {
     gWatchIvl = setInterval(stopWatch, 1000)
     gIsWatchCount = true
     gStartTime = Date.now()
 }
-function setDiffAndScore(difficulty) {
+//Define function to set the best scores each level (will use us in unit function to render the txt of score table)
+function setBestScore(difficulty) {
     if (difficulty === 16) {
         var bestScore = localStorage.getItem('bestScoreEasy')
     } else if (difficulty === 64) {
@@ -325,6 +347,7 @@ function setDiffAndScore(difficulty) {
     }
     return bestScore
 }
+//Define function taht show the cell that was clicked and it's negs (will use us in hints mode)
 function showTheNegs(board, rowIdx, colIdx) {
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
         if (i < 0 || i > board.length - 1) continue;
@@ -342,6 +365,7 @@ function showTheNegs(board, rowIdx, colIdx) {
         }
     }
 }
+//Define function that active the hints mode.
 function getHints() {
     if (gHintStatus) return;
     if (gIsFirstClick) return
@@ -350,6 +374,7 @@ function getHints() {
     updateHtml(gHintsCount, HINT, '.hints')
     updateHtml(1, HINT_ACTIVE, '.hint-active')
 }
+//Define function that show cells only in hint mode (will not change the model, only the dom for 1 sec)
 function cellClickWithHint(neg, type) {
     renderCell(neg, type)
     setTimeout(function () {

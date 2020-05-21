@@ -15,7 +15,7 @@ function loadMinesOnBoard(board, minesNum, cellPos) {
 function updateMinesCount(board) {
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[i].length; j++) {
-            board[i][j].minesAroundCount = countMinesNegs(board, i, j)
+            board[i][j].minesAroundCount = getMinesNegsCount(board, i, j)
         }
     }
 }
@@ -31,6 +31,7 @@ function MarkMines(cell) {
     if (isGameOver) return
     //Get the position of clicking for model updating.
     var cellPosition = getCellPos(cell)
+    if (gBoard[cellPosition.i][cellPosition.j].isShown) return
     //Check if need to add flag or remove the flag
     if (gBoard[cellPosition.i][cellPosition.j].isMarked) {
         gFlagged--

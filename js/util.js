@@ -1,4 +1,5 @@
 'use strict'
+//Define function that create and return board with objects.
 function createBoard(cellsNum) {
   var board = [];
   var length = Math.sqrt(cellsNum);
@@ -15,6 +16,7 @@ function createBoard(cellsNum) {
   }
   return board;
 }
+//Define function that render board to html
 function renderBoard(board) {
   var tableInHtml = document.querySelector('tbody');
   var strHtml = '';
@@ -32,15 +34,19 @@ function renderBoard(board) {
   }
   tableInHtml.innerHTML = strHtml
 }
+//Define function the render txt with "innerText" by prameters of slector and txt.
 function renderTxts(selector, txt) {
   var tagInHtml = document.querySelector(selector)
   tagInHtml.innerText = txt
 }
+//Define function that return random num between min and max (max is not include) 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
+/*Define function that return array with objects of all positions in the board
+(have optional parameter to cut spec pos from the array)*/
 function getArrayWithAllPoses(board, cellToCut) {
   var positions = []
   for (var i = 0; i < board.length; i++) {
@@ -52,6 +58,7 @@ function getArrayWithAllPoses(board, cellToCut) {
   }
   return positions
 }
+//Define function that return array with al cell that not mine or shown
 function getNoMinesOrShown(board) {
   var positions = []
   for (var i = 0; i < board.length; i++) {
@@ -63,10 +70,12 @@ function getNoMinesOrShown(board) {
   }
   return positions
 }
+//Define function that render specific cell by positin and the type to enter the cell.
 function renderCell(cell, type) {
   cell.innerHTML = type
 }
-function countMinesNegs(board, rowIdx, colIdx) {
+//Define function that return the count of mine negs of spec cell
+function getMinesNegsCount(board, rowIdx, colIdx) {
   var minesCount = 0;
   for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
     if (i < 0 || i > board.length - 1) continue
@@ -79,7 +88,6 @@ function countMinesNegs(board, rowIdx, colIdx) {
   }
   return minesCount
 }
-
 // this is the setting of stopwatch
 // This is the variables of the time   of the stopwatch
 var gSeconds = 0
@@ -120,6 +128,7 @@ function stopWatch() {
   }
   document.querySelector('.stop-watch').innerHTML = gDisplayHours + ":" + gDisplayMinutes + ":" + gDispalySeconds;
 }
+//Define function that reset the stop-watch
 function resetStopWatch() {
   clearInterval(gWatchIvl)
   gSeconds = 0;
@@ -130,6 +139,8 @@ function resetStopWatch() {
   gDisplayHours = 0
   document.querySelector('.stop-watch').innerHTML = "00:00:00"
 }
+/*Define function that update the innerHTML by parameters of selector,
+txt and num of times the txt should appearin the spec selector (usee loop to increase the string)*/
 function updateHtml(num, txt, selector) {
   var liveHtml = document.querySelector(selector)
   var strHtml = ''
