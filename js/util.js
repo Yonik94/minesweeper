@@ -11,7 +11,7 @@ function createBoard(cellsNum) {
         isShown: false,
         isMine: false,
         isMarked: false
-      }
+      };
     }
   }
   return board;
@@ -24,20 +24,20 @@ function renderBoard(board) {
     strHtml += `<tr>`
     for (var j = 0; j < board[i].length; j++) {
       strHtml += `<td class="i-${i}-j-${j}"; oncontextmenu="MarkMines(this); return false"
-          onclick="cellClicked(this)"; style="border:3px solid grey">`
+          onclick="cellClicked(this)"; style="border:3px solid grey">`;
       if (board[i][j].isShown) {
-        strHtml += board[i][j].minesAroundCount + '</td>'
+        strHtml += board[i][j].minesAroundCount + '</td>';
       } else {
-        strHtml += '</td>'
+        strHtml += '</td>';
       }
     }
   }
-  tableInHtml.innerHTML = strHtml
+  tableInHtml.innerHTML = strHtml;
 }
 //Define function the render txt with "innerText" by prameters of slector and txt.
 function renderTxts(selector, txt) {
-  var tagInHtml = document.querySelector(selector)
-  tagInHtml.innerText = txt
+  var tagInHtml = document.querySelector(selector);
+  tagInHtml.innerText = txt;
 }
 //Define function that return random num between min and max (max is not include) 
 function getRandomInt(min, max) {
@@ -48,60 +48,60 @@ function getRandomInt(min, max) {
 /*Define function that return array with objects of all positions in the board
 (have optional parameter to cut spec pos from the array)*/
 function getArrayWithAllPoses(board, cellToCut) {
-  var positions = []
+  var positions = [];
   for (var i = 0; i < board.length; i++) {
     for (var j = 0; j < board[i].length; j++) {
-      var position = { i: i, j: j }
-      if (position.i === cellToCut.i && position.j === cellToCut.j) continue
-      positions.push(position)
+      var position = { i: i, j: j };
+      if (position.i === cellToCut.i && position.j === cellToCut.j) continue;
+      positions.push(position);
     }
   }
-  return positions
+  return positions;
 }
 //Define function that return array with al cell that not mine or shown
 function getNoMinesOrShown(board) {
-  var positions = []
+  var positions = [];
   for (var i = 0; i < board.length; i++) {
     for (var j = 0; j < board[i].length; j++) {
-      var position = { i: i, j: j }
-      if ((board[position.i][position.j].isMine) || (board[position.i][position.j].isShown)) continue
-      positions.push(position)
+      var position = { i: i, j: j };
+      if ((board[position.i][position.j].isMine) || (board[position.i][position.j].isShown)) continue;
+      positions.push(position);
     }
   }
-  return positions
+  return positions;
 }
 //Define function that render specific cell by positin and the type to enter the cell.
 function renderCell(cell, type) {
-  cell.innerHTML = type
+  cell.innerHTML = type;
 }
 //Define function that return the count of mine negs of spec cell
 function getMinesNegsCount(board, rowIdx, colIdx) {
   var minesCount = 0;
   for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
-    if (i < 0 || i > board.length - 1) continue
+    if (i < 0 || i > board.length - 1) continue;
     for (var j = colIdx - 1; j <= colIdx + 1; j++) {
-      if (j < 0 || j > board[0].length - 1) continue
-      if (i === rowIdx && j === colIdx) continue
-      var cell = board[i][j]
-      if (cell.isMine) minesCount++
+      if (j < 0 || j > board[0].length - 1) continue;
+      if (i === rowIdx && j === colIdx) continue;
+      var cell = board[i][j];
+      if (cell.isMine) minesCount++;
     }
   }
-  return minesCount
+  return minesCount;
 }
 // this is the setting of stopwatch
 // This is the variables of the time   of the stopwatch
-var gSeconds = 0
-var gMinutes = 0
-var gHours = 0
+var gSeconds = 0;
+var gMinutes = 0;
+var gHours = 0;
 
 // This is the variables of the display time in the stopwatch:
-var gDispalySeconds = 0
-var gDisplayMinutes = 0
-var gDisplayHours = 0
+var gDispalySeconds = 0;
+var gDisplayMinutes = 0;
+var gDisplayHours = 0;
 
 function stopWatch() {
 
-  gSeconds++
+  gSeconds++;
 
   if (gSeconds / 60 === 1) {
     gSeconds = 0;
@@ -130,22 +130,22 @@ function stopWatch() {
 }
 //Define function that reset the stop-watch
 function resetStopWatch() {
-  clearInterval(gWatchIvl)
+  clearInterval(gWatchIvl);
   gSeconds = 0;
   gMinutes = 0;
   gHours = 0;
-  gDispalySeconds = 0
-  gDisplayMinutes = 0
-  gDisplayHours = 0
-  document.querySelector('.stop-watch').innerHTML = "00:00:00"
+  gDispalySeconds = 0;
+  gDisplayMinutes = 0;
+  gDisplayHours = 0;
+  document.querySelector('.stop-watch').innerHTML = "00:00:00";
 }
 /*Define function that update the innerHTML by parameters of selector,
 txt and num of times the txt should appearin the spec selector (usee loop to increase the string)*/
 function updateHtml(num, txt, selector) {
-  var liveHtml = document.querySelector(selector)
-  var strHtml = ''
+  var liveHtml = document.querySelector(selector);
+  var strHtml = '';
   for (var i = 0; i < num; i++) {
-    strHtml += txt
+    strHtml += txt;
   }
-  liveHtml.innerHTML = strHtml
+  liveHtml.innerHTML = strHtml;
 }
