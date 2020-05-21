@@ -1,23 +1,18 @@
 body{
     text-align: center;
+    user-select: none;
 }
 header{
-    margin-top: 50px;
-}
-.first-container{
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 table{
     margin: 0 auto;
-    border: 1px solid black;
-    /* max-height: 600px;
-    min-height: 600px;
-    max-width: 600px;
-    min-width: 600px; */
+    border:  5px solid grey;
+    border-collapse: collapse;
 }
 td{
-    height:50px;
-    width: 50px;
+    height:40px;
+    width: 40px;
 }
 .red{
     background-color: red;
@@ -25,20 +20,20 @@ td{
 .stop-watch{
     display: inline-block;
     font-size: 30px;
-    margin: 30px;
+    margin: 10px 30px;
 }
 .restart-button{
     display: inline-block;
-    margin: 30px;
+    margin: 20px;
 }
 .mines-counter{
     display: inline-block;
-    margin: 30px;
+    margin: 10px 30px;
     font-size: 30px;
 }
 .lives{
     display: inline-block;
-    margin: 30px;
+    margin: 10px 30px;
     font-size: 30px;
 }
 .level{
@@ -63,19 +58,75 @@ span{
 }
 .safe-click{
     text-align: center;
-    margin: 20px auto;
+    margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 200px;
+    width: 165px;
     height: 60px;
     background-color: aquamarine;
     border: 2px solid black;
-    font-size: 25px;
+    font-size: 20px;
 }
 .safe{
-    background-color: aquamarine;
+    background-color: rgb(127, 255, 212);
 }
 .best-score{
-    font-size: 3em;
+    margin-top: 30px ;
+    text-align: center;
+    font-size: 2em;
+    border: 2px solid black;
+}
+.best-score td{
+    border: 2px solid black;
+    width: 350px;
+}
+.best-score th{
+    border: 2px solid black;
+}
+.hints{
+    display: inline-block;
+    margin: auto;
+}
+.manually{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 80px;
+    border: 2px solid black;
+    margin: auto;
+}
+.help-buttons{
+    margin: 0 auto;
+    width: 500px ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.green{
+    background-color: rgb(173, 255, 47);
+}
+.undo{
+    font-weight: bold;
+    font-size: 20px;
+    width: 100px;
+    height: 50px;
+    border: 2px solid brown;
+    background-color: chocolate;
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.manualModal{
+    font-size: 2em;
+    position: absolute;
+    background-color: rgba(173, 255, 47, 0.472);
+    width: 800px;
+    border: 1px solid;
+    display: none;
+}
+.block{
+    display: block;
 }

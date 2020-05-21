@@ -12,13 +12,24 @@
     <header>
         <h1>Minesweeper Game</h1>
     </header>
-    <div class="best-score">Your best score is:</div>
+    <div class="help-buttons">
+        <div class="safe-click" onclick="safeClicked()">
+            Safe click
+            <br>
+            remaining: <span class="safe-num"></span>
+        </div>
+        <div class="hints" onclick="getHints()"></div>
+        <div class="manually" onclick="createManually()">Manually Mode</div>
+    </div>
     <div class="first-container">
         <div class="stop-watch">00:00:00</div>
         <div class="mines-counter"></div>
-        <div class="restart-button" onclick="init(gDifficulty)"></div>
-        <div class="lives">####</div>
+        <div class="lives"></div>
     </div>
+    <div>
+        <div class="restart-button" onclick="init(gDifficulty)"></div>
+    </div>
+    <div class="hint-active"></div>
     <div class="level">
         <span onclick="init(16)">Easy</span>
         <span onclick="init(64)">Hard</span>
@@ -30,15 +41,34 @@
             </tBody>
         </table>
         <div class="win-txt"></div>
+        <div class="manualModal">In Manual mode your clicks set the mines positions.
+            <br>follow the mines count remaining, <br> to know how much ckicks remaining before the game start</div>
     </div>
-    <div class="safe-click" onclick="safeClicked()">
-        Safe click
-        <br>
-        remaining: <span class="safe-num"></span>
+        <div class="undo" onclick="undo()">
+        Undo
     </div>
-
+    <div>
+        <h2>Your best scores:</h2>
+        <table class="best-score">
+            <tHead>
+                <tr>
+                    <th>Easy</th>
+                    <th>Hard</th>
+                    <th>Extreme</th>
+                </tr>
+            </tHead>
+            <tBody>
+                <tr>
+                    <td class="Easy"></td>
+                    <td class="Hard"></td>
+                    <td class="Extreme"></td>
+                </tr>
+            </tBody>
+        </table>
+    </div>
     <script src="js/util.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/mines.js"></script>
 </body>
 
 </html>
