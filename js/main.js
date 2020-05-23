@@ -246,13 +246,18 @@ function gameOver(board) {
     isGameOver = true;
 }
 //Define function that check winning
+
+//Define function that check winning
 function checkIfWin(board) {
     if (gFlagged !== gMinesCount) return false;
-    for (var i = 0; i < board.length; i++);
+    debugger
+    for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[i].length; j++) {
+            console.log(board[i][j])
             if (board[i][j].isMine) continue;
-            if (!board[i][j].isShown) return false;
+            if (board[i][j].isShown === false) return false;
         }
+    }
     return true;
 }
 //Define function that stop and change the game when user win
