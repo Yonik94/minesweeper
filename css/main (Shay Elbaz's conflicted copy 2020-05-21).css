@@ -1,0 +1,108 @@
+body{
+    text-align: center;
+}
+header{
+    margin-top: 50px;
+}
+table{
+    margin: 0 auto;
+    border:  5px solid grey;
+    border-collapse: collapse;
+}
+td{
+    height:40px;
+    width: 40px;
+}
+.red{
+    background-color: red;
+}
+.stop-watch{
+    display: inline-block;
+    font-size: 30px;
+    margin: 10px 30px;
+}
+.restart-button{
+    display: inline-block;
+    margin: 20px;
+}
+.mines-counter{
+    display: inline-block;
+    margin: 10px 30px;
+    font-size: 30px;
+}
+.lives{
+    display: inline-block;
+    margin: 10px 30px;
+    font-size: 30px;
+}
+.level{
+    font-size: 2em;
+    margin-bottom: 30px;
+}
+span{
+    margin: 30px;
+}
+.board-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.win-txt{
+    position: absolute;
+    font-size: 70px;
+    color: blue;
+}
+.clicked{
+    background-color: grey;
+}
+.safe-click{
+    text-align: center;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 165px;
+    height: 60px;
+    background-color: aquamarine;
+    border: 2px solid black;
+    font-size: 20px;
+}
+.safe{
+    background-color: aquamarine;
+}
+.best-score{
+    margin-top: 30px ;
+    text-align: center;
+    font-size: 2em;
+    border: 2px solid black;
+}
+.best-score td{
+    border: 2px solid black;
+    width: 350px;
+}
+.best-score th{
+    border: 2px solid black;
+}
+.hints{
+    display: inline-block;
+    margin: auto;
+}
+.manually{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 80px;
+    border: 2px solid black;
+    margin: auto;
+}
+.help-buttons{
+    margin: 0 auto;
+    width: 500px ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.green{
+    background-color: greenyellow;
+}
